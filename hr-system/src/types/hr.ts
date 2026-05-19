@@ -11,7 +11,7 @@ export type ContractType = 'CLT' | 'PJ' | 'Estágio' | 'Temporário';
 export interface Department {
   id: string;
   name: string;
-  description: string;
+  description: string | null;
   managerId: string | null;
   createdAt: string;
 }
@@ -19,7 +19,6 @@ export interface Department {
 export interface Position {
   id: string;
   name: string;
-  description: string;
   departmentId: string;
 }
 

@@ -19,18 +19,18 @@ export const departments: Department[] = [
 
 // ─── Positions ────────────────────────────────────────────────────────────────
 export const positions: Position[] = [
-  { id: 'p1', name: 'Desenvolvedor Júnior', description: '', departmentId: 'd1' },
-  { id: 'p2', name: 'Desenvolvedor Sênior', description: '', departmentId: 'd1' },
-  { id: 'p3', name: 'Tech Lead', description: '', departmentId: 'd1' },
-  { id: 'p4', name: 'Analista Financeiro', description: '', departmentId: 'd2' },
-  { id: 'p5', name: 'Coordenador Financeiro', description: '', departmentId: 'd2' },
-  { id: 'p6', name: 'Analista de RH', description: '', departmentId: 'd3' },
-  { id: 'p7', name: 'Coordenador de RH', description: '', departmentId: 'd3' },
-  { id: 'p8', name: 'Executivo de Vendas', description: '', departmentId: 'd4' },
-  { id: 'p9', name: 'Gerente Comercial', description: '', departmentId: 'd4' },
-  { id: 'p10', name: 'Designer', description: '', departmentId: 'd5' },
-  { id: 'p11', name: 'Analista de Marketing', description: '', departmentId: 'd5' },
-  { id: 'p12', name: 'Advogado', description: '', departmentId: 'd6' },
+  { id: 'p1', name: 'Desenvolvedor Júnior', departmentId: 'd1' },
+  { id: 'p2', name: 'Desenvolvedor Sênior', departmentId: 'd1' },
+  { id: 'p3', name: 'Tech Lead', departmentId: 'd1' },
+  { id: 'p4', name: 'Analista Financeiro', departmentId: 'd2' },
+  { id: 'p5', name: 'Coordenador Financeiro', departmentId: 'd2' },
+  { id: 'p6', name: 'Analista de RH', departmentId: 'd3' },
+  { id: 'p7', name: 'Coordenador de RH', departmentId: 'd3' },
+  { id: 'p8', name: 'Executivo de Vendas', departmentId: 'd4' },
+  { id: 'p9', name: 'Gerente Comercial', departmentId: 'd4' },
+  { id: 'p10', name: 'Designer', departmentId: 'd5' },
+  { id: 'p11', name: 'Analista de Marketing', departmentId: 'd5' },
+  { id: 'p12', name: 'Advogado', departmentId: 'd6' },
 ];
 
 // ─── Employees ────────────────────────────────────────────────────────────────
