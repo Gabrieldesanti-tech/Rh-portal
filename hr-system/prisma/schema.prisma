@@ -1,0 +1,150 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum EmployeeStatus {
+  ativo
+  afastado
+  ferias
+  desligado
+  admissao
+}
+
+enum ContractType {
+  CLT
+  PJ
+  Estagio
+  Temporario
+}
+
+enum AnnouncementStatus {
+  rascunho
+  pendente
+  aprovado
+  agendado
+  enviado
+  cancelado
+  reprovado
+}
+
+enum AnnouncementType {
+  manual
+  automatico
+  comemorativo
+}
+
+enum VacationStatus {
+  aguardando_periodo
+  disponivel
+  solicitada
+  aprovada
+  reprovada
+  em_andamento
+  concluida
+  vencida
+}
+
+model Employee {
+  id              String         @id @default(uuid())
+  company         String         @default("Igreja Mananciais")
+  fullName        String
+  cpf             String?        @unique
+  rg              String?
+  email           String         @unique
+  personalEmail   String?
+  phone           String?
+  birthDate       DateTime?
+  address         String?
+  maritalStatus   String?
+  avatarInitials  String
+  
+  // Relações Estruturais
+  departmentId    String
+  department      Department     @relation("Staff", fields: [departmentId], references: [id])
+  positionId      String
+  position        Position       @relation(fields: [positionId], references: [id])
+  
+  // Auto-relacionamento (Gestor)
+  managerId       String?
+  manager         Employee?      @relation("Management", fields: [managerId], references: [id])
+  subordinates    Employee[]     @relation("Management")
+  
+  // Datas de contrato
+  admissionDate   DateTime
+  contractType    ContractType
+  status          EmployeeStatus @default(admissao)
+  salary          Float
+  benefits        String[]
+  notes           String?
+  
+  // Férias e Auditoria
+  vacations       Vacation[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  // Gestão de departamentos
+  managedDepartments Department[] @relation("Manager")
+}
+
+model Department {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  
+  // Gestor
+  managerId   String?
+  manager     Employee?  @relation("Manager", fields: [managerId], references: [id])
+  
+  employees   Employee[] @relation("Staff")
+  positions   Position[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Position {
+  id           String     @id @default(uuid())
+  name         String
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  employees    Employee[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([name, departmentId])
+}
+
+model Vacation {
+  id             String         @id @default(uuid())
+  employeeId     String
+  employee       Employee       @relation(fields: [employeeId], references: [id])
+  status         VacationStatus @default(aguardando_periodo)
+  daysRemaining  Int            @default(30)
+  concessionStart DateTime
+  concessionEnd   DateTime
+  
+  // Período de férias solicitado
+  requestedStart DateTime?
+  requestedEnd   DateTime?
+  totalDays      Int?
+  
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Announcement {
+  id             String             @id @default(uuid())
+  title          String
+  body           String
+  type           AnnouncementType   @default(manual)
+  status         AnnouncementStatus @default(pendente)
+  recipientCount Int                @default(0)
+  scheduledDate  DateTime?
+  sentAt         DateTime?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+}
